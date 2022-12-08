@@ -1,72 +1,11 @@
 import discord
-import requests
-import json
 from datetime import date
+from fetch_helper import *
 
 
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
-
-def prob_stats(username):
-    cookies = {
-        '__stripe_mid': '-',
-        'csrftoken': '-',
-    }
-
-    headers = {
-        'authority': 'leetcode.com',
-        'accept': '*/*',
-        'accept-language': 'en-US,en;q=0.9',
-        'authorization': '',
-        'content-type': 'application/json',
-        'origin': 'https://leetcode.com',
-        'referer': 'https://leetcode.com/patelshyamal016/',
-        'sec-ch-ua': '"Not?A_Brand";v="8", "Chromium";v="108", "Microsoft Edge";v="108"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Windows"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-origin',
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36 Edg/108.0.1462.42',
-        'x-csrftoken': '9wjYjzwi9km3CkxuIu6w9MY3KNErXyIgiEFFVcpLsA5lrC4kdKapSG8mBS0DwWAD',
-    }
-
-    json_data = {
-            'query': '\n    query userProblemsSolved($username: String!) {\n  allQuestionsCount {\n    difficulty\n    count\n  }\n  matchedUser(username: $username) {\n    problemsSolvedBeatsStats {\n      difficulty\n      percentage\n    }\n    submitStatsGlobal {\n      acSubmissionNum {\n        difficulty\n        count\n      }\n    }\n  }\n}\n    ',
-            'variables': {
-                'username': f'{username}',
-        },
-    }
-
-    response = requests.post('https://leetcode.com/graphql/', cookies=cookies, headers=headers, json=json_data)
-    json_data = json.loads(response.text)
-    return json_data
-
-    pass
-
-
-def prim_stats(username):
-    cookies = {
-        'csrftoken': '-',
-    }
-
-    headers = {
-        'Content-Type': 'application/json',
-    }
-
-    json_data = {
-        'query': 'query userPublicProfile($username: String!) {\n\tmatchedUser(username: $username) {\n\t\tcontestBadge {\n\t\t\tname\n\t\t\texpired\n\t\t\thoverText\n\t\t\ticon\n\t\t}\n\t\tusername\n\t\tgithubUrl\n\t\ttwitterUrl\n\t\tlinkedinUrl\n\t\tprofile {\n\t\t\tranking\n\t\t\tuserAvatar\n\t\t\trealName\n\t\t\taboutMe\n\t\t\tschool\n\t\t\twebsites\n\t\t\tcountryName\n\t\t\tcompany\n\t\t\tjobTitle\n\t\t\tskillTags\n\t\t\tpostViewCount\n\t\t\tpostViewCountDiff\n\t\t\treputation\n\t\t\treputationDiff\n\t\t\tsolutionCount\n\t\t\tsolutionCountDiff\n\t\t\tcategoryDiscussCount\n\t\t\tcategoryDiscussCountDiff\n\t\t}\n\t}\n}\n',
-        'variables': {
-            'username': f'{username}',
-        },
-        'operationName': 'userPublicProfile',
-    }
-
-    response = requests.post('https://leetcode.com/graphql/', cookies=cookies, headers=headers, json=json_data)
-    json_data = json.loads(response.text)
-    
-    return json_data
 
 @client.event
 async def on_ready():
