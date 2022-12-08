@@ -10,8 +10,8 @@ client = discord.Client(intents=intents)
 
 def prob_stats(username):
     cookies = {
-        '__stripe_mid': '85b03df6-d23b-4a8c-b5c9-a1a02588c0a2ce0b63',
-        'csrftoken': '9wjYjzwi9km3CkxuIu6w9MY3KNErXyIgiEFFVcpLsA5lrC4kdKapSG8mBS0DwWAD',
+        '__stripe_mid': '-',
+        'csrftoken': '-',
     }
 
     headers = {
@@ -48,7 +48,7 @@ def prob_stats(username):
 
 def prim_stats(username):
     cookies = {
-        'csrftoken': '1BKOmSPtdbAeWxLp8SjeRRCCkqKYtLKmvIUmgkrBfQ63h22yv9eNXE28gBOH50uT',
+        'csrftoken': '-',
     }
 
     headers = {
@@ -133,5 +133,5 @@ async def on_message(message):
         await message.channel.send(embed=embed)
 
         
-client.run("MTA1MDIzNDcxMjg4NDUzMTI0MA.GDNqWy.bYPTmRtRiM4b6VUJ91PVjFBRcmw5JnIGiowRLc")
+client.run("-.-.-")
 
